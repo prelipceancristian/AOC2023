@@ -1,7 +1,7 @@
 package day3
 
 import common.readInputLines
-import common.readTestLines
+//import common.readTestLines
 
 fun main() {
     val lines = readInputLines(3)
