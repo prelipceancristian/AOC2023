@@ -1,7 +1,6 @@
 package day5
 
 import common.readInputLines
-import common.readTestLines
 
 fun main() {
 //    val lines = readTestLines(5)
@@ -23,6 +22,7 @@ fun buildIntervals(lines: List<String>): List<Interval> {
     return lines
         .map { it.split(' ') }
         .map { Interval(it[1].toLong(), it[0].toLong(), it[2].toLong()) }
+        .sortedBy { it.intervalStart }
 }
 
 fun buildMappings(lines: List<String>): List<List<Interval>> {
@@ -47,7 +47,7 @@ fun mapSeedsToLocation(seeds: List<Long>, mappings: List<List<Interval>>): List<
 
 fun transformMapped(mapped: Long, intervals: List<Interval>): Long {
     for (interval in intervals) {
-        if (mapped in interval.intervalStart..<(interval.intervalStart + interval.offset)) {
+        if (mapped in interval.intervalStart..<(interval.intervalStart + interval.length)) {
             val offsetFromIntervalStart = mapped - interval.intervalStart
             return interval.mappingStart + offsetFromIntervalStart
         }
@@ -55,4 +55,4 @@ fun transformMapped(mapped: Long, intervals: List<Interval>): Long {
     return mapped
 }
 
-data class Interval(val intervalStart: Long, val mappingStart: Long, val offset: Long)
+data class Interval(val intervalStart: Long, val mappingStart: Long, val length: Long)
